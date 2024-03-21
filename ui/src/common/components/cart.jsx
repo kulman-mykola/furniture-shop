@@ -11,6 +11,7 @@ import {
 } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { FaTrash } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 export const  Cart = ({isOpen, onClose}) => {
 
@@ -57,7 +58,7 @@ export const  Cart = ({isOpen, onClose}) => {
                         )}
                         {items.length > 0 && (
                             <Box mt="4" textAlign="right">
-                                <Button colorScheme="blue">Checkout</Button>
+                                <Link to={'/checkout'}><Button colorScheme="blue">Checkout</Button></Link>
                             </Box>
                         )}
                     </Box>

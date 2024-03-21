@@ -10,9 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@chakra-ui/icon": "^3.2.0",
     "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
+    "@stripe/react-stripe-js": "^2.6.2",
+    "@stripe/stripe-js": "^3.0.10",
     "axios": "^1.6.8",
     "framer-motion": "^11.0.15",
     "localforage": "^1.10.0",

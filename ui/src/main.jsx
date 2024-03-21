@@ -7,6 +7,8 @@ import { Products } from './pages/products.jsx';
 import { ChakraProvider } from '@chakra-ui/react';
 import { CartContextProvider } from './contexts/cart.context.jsx';
 import { Header } from './common/components/header.jsx';
+import { Home } from './pages/home.jsx';
+import { Checkout } from './pages/checkout.jsx';
 
 const router = createBrowserRouter([
     {
@@ -20,8 +22,16 @@ const router = createBrowserRouter([
             </ChakraProvider>,
         children: [
             {
+                path: '/',
+                element:<Home/>
+            },
+            {
                 path: '/products',
                 element: <Products/>
+            },
+            {
+                path: '/checkout',
+                element: <Checkout/>
             }
         ]
     },
