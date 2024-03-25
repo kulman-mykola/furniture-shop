@@ -8,7 +8,6 @@ import { OrdersModule } from './orders/orders.module';
 import { StripeModule } from '@golevelup/nestjs-stripe';
 import { StripeService } from './stripe.service';
 import { ConfigModule } from '@nestjs/config';
-import { constants } from './constants';
 import * as process from 'process';
 
 @Module({

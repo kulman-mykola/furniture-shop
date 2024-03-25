@@ -5,7 +5,7 @@ export class StripeService {
 
     @StripeWebhookHandler('payment_intent.created')
     a(evt: any) {
-        console.log('dumb');
+        console.log('create payment');
     }
 
     @StripeWebhookHandler('payment_intent.succeeded')

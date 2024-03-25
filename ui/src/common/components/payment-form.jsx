@@ -26,9 +26,6 @@ export const PaymentForm = () => {
         }
 
 
-        // Create the PaymentIntent and obtain clientSecret from your server endpoint
-
-
         const { error } = await stripe.confirmPayment({
             elements,
             confirmParams: {
