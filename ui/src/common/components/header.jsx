@@ -3,17 +3,17 @@ import { FaHome, FaShoppingBag, FaShoppingCart } from 'react-icons/fa';
 import { useState } from 'react';
 import { useCart } from '../../contexts/cart.context.jsx';
 import { Cart } from './cart.jsx';
-import { Link, useLocation, useNavigate, useNavigation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 
 export const Header = () => {
     const [isCartOpen, setIsCartOpen] = useState(false);
 
     const nav = useLocation()
-    
+
     const color = nav.pathname === '/' ? '#A9D5DE' : 'black'
 
-    const { items } = useCart()
+    const { cartItems } = useCart()
 
     const handleOpenCart = () => {
         setIsCartOpen(true);
@@ -29,7 +29,7 @@ export const Header = () => {
             align="center"
             justify="space-between"
             padding="1rem"
-            backgroundColor='rgba(255, 255, 255, 0.4)'
+            backgroundColor='rgba(255, 255, 255, 0.6)'
             borderBottom="1px solid"
             borderColor="gray.200"
         >
@@ -58,9 +58,9 @@ export const Header = () => {
 
             <Box display={'flex'} width={200} position="relative" justifyContent={'end'}>
                 <IconButton aria-label="Cart" icon={<FaShoppingCart />} onClick={handleOpenCart} />
-                {items.length > 0 && (
+                {cartItems.length > 0 && (
                     <Badge colorScheme="green" position="absolute" top="-1" right="-1" borderRadius="full" px="2">
-                        {items.length}
+                        {cartItems.length}
                     </Badge>
                 )}
             </Box>

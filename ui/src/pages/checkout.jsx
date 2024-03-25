@@ -1,24 +1,47 @@
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { PaymentForm } from '../common/components/payment-form.jsx';
+import { Button } from '@chakra-ui/react';
+import { useState } from 'react';
+import { useCart } from '../contexts/cart.context.jsx';
+import axios from 'axios';
 
-const stripePromise = loadStripe('pk_test_51OvcJmHv20A6zFX9whQNH2I56ebEg0VqGv3PKiS9cP8bW23UqoT1qY6LgoGKacVYjof6jQJtzkvhebF32shmwsbS00Sx6F4mq4')
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY)
 
 export const Checkout = () => {
 
-    const options = {
-        mode: 'payment',
-        amount: 1099,
+    const [secret, setSecret] = useState('')
+    const { cartItems } = useCart()
+
+    const optionsAPI = {
+        amount: parseInt(cartItems.reduce((total, item) => total + (item.price * item.quantity), 0) * 100),
         currency: 'usd',
-        // Fully customizable with appearance API.
+
+    };
+
+    const optionsUI = {
+        clientSecret: secret,
         appearance: {
             labels: 'floating',
         },
-    };
+    }
+
+    const createPayment = async () => {
+        await axios.post('http://localhost:3000/create-intent', optionsAPI).then(res => {
+            setSecret(res.data.clientSecret)
+        })
+    }
 
     return (
-        <Elements stripe={stripePromise} options={options}>
-            <PaymentForm/>
-        </Elements>
+        !secret ? (
+            <Button onClick={() => createPayment()}>
+                Checkout
+            </Button>
+        ) :(
+            <Elements stripe={stripePromise} options={optionsUI}>
+                < PaymentForm/>
+            </Elements>
+        )
+
     );
 };
