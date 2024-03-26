@@ -1,10 +1,13 @@
 import { Badge, Box, Flex, Heading, IconButton } from '@chakra-ui/react';
-import { FaHome, FaShoppingBag, FaShoppingCart } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import { useCart } from '../../contexts/cart.context.jsx';
 import { Cart } from './cart.jsx';
 import { Link, useLocation } from 'react-router-dom';
 import ReactLogo from '../../assets/logo.svg?react';
+import { IoCart } from "react-icons/io5";
+import { MdStoreMallDirectory } from "react-icons/md";
+import { IoSettings } from "react-icons/io5";
+import { RiAccountCircleFill } from "react-icons/ri";
 
 export const Header = () => {
     const [isCartOpen, setIsCartOpen] = useState(false);
@@ -59,7 +62,6 @@ export const Header = () => {
         setIsCartOpen(false);
     };
 
-
     const getOpacity = () => {
         return `rgba(255, 255, 255, ${scrollPosition / 100})`
     }
@@ -73,40 +75,61 @@ export const Header = () => {
             justify="space-between"
             padding="1rem"
             backgroundColor={getOpacity()}
-            // borderBottom="1px solid"
             borderColor="gray.200"
         >
             <Heading color={color} width={200} as="h1" size="lg">
-                <ReactLogo fill={color}/>
+                <Link to={'/'}>
+                    <ReactLogo fill={color}/>
+                </Link>
             </Heading>
 
+
+
             <Flex align="center" gap="60px">
-                <Link to={'/'}>
-                    <IconButton
-                        variant={'unstyled'}
-                        color={color}
-                        aria-label="Go to Home"
-                        icon={<FaHome  size={36} />}
-                    />
-                </Link>
                 <Link to={'/products'}>
                     <IconButton
                         variant={'unstyled'}
                         color={color}
                         aria-label="Open Shopping Cart"
-                        icon={<FaShoppingBag size={36} />}
+                        icon={<MdStoreMallDirectory size={36} />}
                     />
                 </Link>
             </Flex>
 
-            <Box display={'flex'} width={200} position="relative" justifyContent={'end'}>
-                <IconButton aria-label="Cart" icon={<FaShoppingCart />} onClick={handleOpenCart} />
+            <Box role={'group'} display={'flex'}
+                 style={{justifyContent:'end', transition: 'all 0.3s ease-in', transitionDelay: '0.5s',  alignItems: 'center'}} width={200} position="relative" justifyContent={'end'}>
+                <IconButton
+                    style={{position: 'absolute', opacity: 0.2}}
+                    variant={'unstyled'}
+                    color={color}
+                    aria-label="Cart"
+                    icon={<IoCart size={36} />}
+                    onClick={handleOpenCart}
+                    _groupHover={{transition: 'all 0.3s ease-out', transitionDelay: '0s', transform: 'translateX(-150%)'}}
+                />
                 {cartItems.length > 0 && (
                     <Badge colorScheme="green" position="absolute" top="-1" right="-1" borderRadius="full" px="2">
                         {cartItems.length}
                     </Badge>
                 )}
+
+                <IconButton
+                    style={{position: 'absolute', transition: 'all 0.3s ease-out'}}
+                    variant={'unstyled'}
+                    color={color}
+                    aria-label="Open Shopping Cart"
+                    icon={<IoSettings size={36} />}
+                    _groupHover={{transition: 'all 0.3s ease-out', transform: 'translateY(150%)'}}
+                />
+
+                <IconButton
+                    variant={'unstyled'}
+                    color={color}
+                    aria-label="Open Shopping Cart"
+                    icon={<RiAccountCircleFill size={36} />}
+                />
             </Box>
+
             <Cart isOpen={isCartOpen} onClose={handleCloseCart}></Cart>
         </Flex>
     );

@@ -7,6 +7,7 @@ import { UsersModule } from './users/users.module';
 import { OrdersModule } from './orders/orders.module';
 import { ConfigModule } from '@nestjs/config';
 import { StripeService } from './stripe.service';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
     imports: [
@@ -24,6 +25,7 @@ import { StripeService } from './stripe.service';
         UsersModule,
         ProductsModule,
         OrdersModule,
+        AuthModule,
     ],
     controllers: [AppController],
     providers: [AppService],
