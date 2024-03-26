@@ -14,9 +14,9 @@ export const Checkout = () => {
     const { cartItems } = useCart()
 
     const optionsAPI = {
-        amount: parseInt(cartItems.reduce((total, item) => total + (item.price * item.quantity), 0) * 100),
+        cartItems: cartItems.map((item) => { return { id: item.id, quantity: item.quantity } }
+        ),
         currency: 'usd',
-
     };
 
     const optionsUI = {
@@ -27,7 +27,7 @@ export const Checkout = () => {
     }
 
     const createPayment = async () => {
-        await axios.post('http://localhost:3000/create-intent', optionsAPI).then(res => {
+        await axios.post('http://localhost:3000/orders/create-intent', optionsAPI).then(res => {
             setSecret(res.data.clientSecret)
         })
     }

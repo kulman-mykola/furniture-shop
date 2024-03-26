@@ -1,20 +1,24 @@
 import { StripeWebhookHandler } from '@golevelup/nestjs-stripe';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Order } from './orders/entities/order.entity';
+import { Repository } from 'typeorm';
 
 export class StripeService {
-    constructor() {}
+    constructor(
+        @InjectRepository(Order)
+        private readonly orderRepository: Repository<Order>
+    ) {}
 
     @StripeWebhookHandler('payment_intent.created')
-    a(evt: any) {
-        console.log('create payment');
-    }
+    a(evt: any) {}
 
     @StripeWebhookHandler('payment_intent.succeeded')
-    b(evt: any) {
-        console.log('dumb');
+    async b(evt: any) {
+        await this.orderRepository.update({ paymentIntent: evt.data.object.paymentIntent }, { isPaid: true });
     }
 
     @StripeWebhookHandler('charge.succeeded')
-    d(evt: any) {
-        console.log('dumb');
+    async d(evt: any) {
+        await this.orderRepository.update({ paymentIntent: evt.data.object.payment_intent }, { isPaid: true });
     }
 }

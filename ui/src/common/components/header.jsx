@@ -34,9 +34,9 @@ export const Header = () => {
     const handleScroll = () => {
         const scrollPosition = window.scrollY;
 
-        let percentageInRange = (scrollPosition / 200) * 100;
+        let percentageInRange = (scrollPosition / 300) * 100;
 
-        if (scrollPosition > 200) {
+        if (scrollPosition > 300) {
             percentageInRange = 100;
         }
 
