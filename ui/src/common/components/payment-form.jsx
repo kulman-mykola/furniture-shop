@@ -44,10 +44,14 @@ export const PaymentForm = () => {
         }
     };
 
+    const PAYMENT_ELEMENT_OPTIONS = {
+        wallets: ['visa', 'mastercard'],
+    };
+
 
     return (
             <form onSubmit={handleSubmit} style={{ width: 500, margin: 'auto' }}>
-                <PaymentElement></PaymentElement>
+                <PaymentElement options={PAYMENT_ELEMENT_OPTIONS}></PaymentElement>
                 <Button type="submit" disabled={!stripe || !elements}>
                     Pay
                 </Button>

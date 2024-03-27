@@ -9,16 +9,21 @@ import { CartContextProvider } from './contexts/cart.context.jsx';
 import { Header } from './common/components/header.jsx';
 import { Home } from './pages/home.jsx';
 import { Checkout } from './pages/checkout.jsx';
+import Auth from './pages/auth.jsx';
+import { AuthContextProvider } from './contexts/auth.context.jsx';
+import { UserPanel } from './pages/user-panel.jsx';
 
 const router = createBrowserRouter([
     {
         path: "/",
         element:
             <ChakraProvider>
-                <CartContextProvider>
-                    <Header/>
-                    <App/>
-                </CartContextProvider>
+                <AuthContextProvider>
+                    <CartContextProvider>
+                        <Header/>
+                        <App/>
+                    </CartContextProvider>
+                </AuthContextProvider>
             </ChakraProvider>,
         children: [
             {
@@ -26,12 +31,26 @@ const router = createBrowserRouter([
                 element:<Home/>
             },
             {
-                path: '/products',
+                path: 'auth',
+                element:<Auth/>
+            },
+            {
+                path: 'products',
                 element: <Products/>
             },
             {
-                path: '/checkout',
+                path: 'checkout',
                 element: <Checkout/>
+            },
+            {
+                path: 'user',
+                element: <Outlet/>,
+                children: [
+                    {
+                        path: 'panel',
+                        element: <UserPanel/>
+                    }
+                ]
             }
         ]
     },
